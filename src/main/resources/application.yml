@@ -29,8 +29,19 @@ spring:
     url: "jdbc:postgresql://localhost:5432/epolsoft_database?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
     driver-class-name: org.postgresql.Driver
 
+app:
+  upload-path: C:\\Users\\MaximZabavskiy\\Desktop\\
 
-
+---
+amazon:
+  images:
+    s3: epolsofttaskmaximzabavskiy
+    accessKeyId: name
+    secretKey: name
+    bucket: epolsofttaskmaximzabavskiy
+    serverUrl: "https://epolsofttaskmaximzabavskiy.s3.eu-central-1.amazonaws.com"
+    userFolder: reports
+    region: eu-central-1
 
 
 

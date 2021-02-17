@@ -1,4 +1,4 @@
-package by.zabavskiy.controller.convert.user;
+package by.zabavskiy.controller.convert.task;
 
 import by.zabavskiy.controller.request.TaskCreateRequest;
 import by.zabavskiy.domain.Task;

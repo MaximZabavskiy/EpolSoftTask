@@ -18,7 +18,15 @@ public interface TaskService {
 
   Optional<Task> findById(Long taskId);
 
-  //    List<Task> searchByParams(String name, Long status, Date startDate, Date endDate);
+  List<Task> searchByParamsFunctionCall(Long status, Date startDate, Date endDate);
 
-  List<Task> searchByParamsCriteriaApi(String name, Long status, Date startDate, Date endDate);
+  List<Task> searchByParamsHQL(Long status, Date startDate, Date endDate);
+
+  List<Task> searchByParamNameCriteriaApi(String name);
+
+  List<Task> searchByParamStatus(Long status);
+
+  List<Task> searchByParamStartDate(Date startDate);
+
+  List<Task> searchByParamEndDate(Date endDate);
 }

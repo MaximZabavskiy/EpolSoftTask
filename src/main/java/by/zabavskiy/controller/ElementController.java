@@ -2,14 +2,8 @@ package by.zabavskiy.controller;
 
 import by.zabavskiy.controller.request.ElementCreateRequest;
 import by.zabavskiy.controller.request.ElementEditRequest;
-import by.zabavskiy.controller.request.TaskCreateRequest;
-import by.zabavskiy.controller.request.TaskEditRequest;
 import by.zabavskiy.domain.Element;
-import by.zabavskiy.domain.Task;
-import by.zabavskiy.exception.EntityNotFoundException;
-import by.zabavskiy.repository.impl.ElementSpringDataRepository;
 import by.zabavskiy.service.ElementService;
-import by.zabavskiy.service.TaskService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -19,9 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
-
 
 @RestController
 @RequestMapping("tasks/elements")
@@ -32,29 +24,26 @@ public class ElementController {
 
     public final ConversionService conversionService;
 
-
     @ApiOperation(value = "Endpoint \"Creation of element\"")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Successful creation of element"),
-            @ApiResponse(code = 422, message = "Failed element creation properties validation"),
             @ApiResponse(code = 500, message = "Server error, something wrong")
     })
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Element createElement(@Valid @RequestBody ElementCreateRequest elementCreateRequest) {
+    public Element createElement(@RequestBody ElementCreateRequest elementCreateRequest) {
 
         Element element = conversionService.convert(elementCreateRequest, Element.class);
 
         return elementService.save(element);
     }
 
-
     @ApiOperation(value = "Endpoint \"All elements search\"")
     @GetMapping
     public ResponseEntity<List<Element>> findAllTasks() {
+
         return new ResponseEntity<>(elementService.findAll(), HttpStatus.OK);
     }
-
 
     @ApiOperation(value = "Endpoint \"Element's update\"")
     @PutMapping
@@ -66,12 +55,25 @@ public class ElementController {
         return elementService.update(element);
     }
 
-
     @ApiOperation(value = "Endpoint \"Element's deletion\"")
     @PutMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteElementById(@PathVariable("id") Long elementId) {
 
-        elementService.deleteById(elementId);
+        elementService.deleteElementById(elementId);
+    }
+
+    @ApiOperation(value = "Endpoint \"Elements search by param \"Name\" by CriteriaApi\"")
+    @GetMapping("/criteriaapisearch")
+    public ResponseEntity<List<Element>> searchByParamNameCriteriaApi(String value) {
+
+        return new ResponseEntity<>(elementService.searchByParamValueCriteriaApi(value), HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "Endpoint \"Elements search by param \"Task Id\"\"")
+    @GetMapping("/elementsearchbytaskid")
+    public ResponseEntity<List<Element>> searchByParamTaskId(Long id) {
+
+        return new ResponseEntity<>(elementService.searchByParamTaskId(id), HttpStatus.OK);
     }
 }

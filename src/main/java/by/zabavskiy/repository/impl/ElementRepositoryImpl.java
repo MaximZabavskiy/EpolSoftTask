@@ -1,4 +1,47 @@
 package by.zabavskiy.repository.impl;
 
-public class ElementRepositoryImpl {
+import by.zabavskiy.domain.Element;
+import by.zabavskiy.domain.Element_;
+import by.zabavskiy.domain.Task;
+import by.zabavskiy.domain.Task_;
+import by.zabavskiy.repository.ElementRepository;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
+import java.util.List;
+
+@Repository
+public class ElementRepositoryImpl implements ElementRepository {
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Override
+    public List<Element> searchByParamValueCriteriaApi(String value) {
+
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Element> query = cb.createQuery(Element.class);
+        Root<Element> root = query.from(Element.class);
+
+        ParameterExpression<String> valueSearchParam = cb.parameter(String.class);
+
+        Expression<String> partOfValue = root.get(Element_.value);
+
+        query.select(root)
+                .distinct(true)
+                    .where
+                            (cb.like(partOfValue, valueSearchParam))
+                    .orderBy(cb.asc(root.get(Element_.id)));
+
+        TypedQuery<Element> resultQuery = entityManager.createQuery(query);
+
+        resultQuery.setParameter(valueSearchParam, StringUtils.join("%", value, "%"));
+
+        return resultQuery.getResultList();
+    }
 }

@@ -2,6 +2,7 @@ package by.zabavskiy.domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,11 +12,8 @@ import java.util.Set;
 
 @Data
 @Entity
-// @EqualsAndHashCode(exclude = {
-//        "role", "programs", "workouts", "calendar"})
+@EqualsAndHashCode(exclude = {"elements"})
 @Table(name = "m_tasks")
-// @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-// @Cacheable
 public class Task implements Serializable {
 
   @Id
@@ -36,7 +34,8 @@ public class Task implements Serializable {
   @Temporal(TemporalType.DATE)
   private Date endDate;
 
-  @Column private Long status;
+  @Column
+  private Long status;
 
   @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   @JsonManagedReference

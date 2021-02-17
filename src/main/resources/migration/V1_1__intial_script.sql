@@ -27,4 +27,15 @@ create table m_elements
 
 alter table m_elements owner to maxim;
 
+create table m_reports
+(
+    id bigserial not null
+        constraint m_reports_pk
+            primary key,
+    photo_link varchar(200)
+);
+
+alter table m_reports owner to maxim;
+
+
 

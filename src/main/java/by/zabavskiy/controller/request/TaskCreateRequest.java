@@ -1,7 +1,5 @@
 package by.zabavskiy.controller.request;
 
-import com.sun.istack.NotNull;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.sql.Date;

@@ -13,5 +13,9 @@ public interface ElementService {
 
     Element update(Element user);
 
-    void deleteById(Long id);
+    void deleteElementById(Long id);
+
+    List<Element> searchByParamValueCriteriaApi(String value);
+
+    List<Element> searchByParamTaskId(Long id);
 }
