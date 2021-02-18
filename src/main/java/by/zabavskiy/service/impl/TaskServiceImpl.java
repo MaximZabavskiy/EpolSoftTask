@@ -52,29 +52,40 @@ public class TaskServiceImpl implements TaskService {
         return taskRepository.searchByParamNameCriteriaApi(name);
     }
 
+
     @Override
     public List<Task> searchByParamsHQL(Long status, Date startDate, Date endDate) {
         return taskSpringDataRepository.searchByParamsHQL(status, startDate, endDate);
     }
+
 
     @Override
     public List<Task> searchByParamsFunctionCall(Long status, Date startDate, Date endDate) {
         return taskSpringDataRepository.searchByParamsFunctionCall(status, startDate, endDate);
     }
 
+
     @Override
     public List<Task> searchByParamStatus(Long status) {
         return taskSpringDataRepository.searchByParamStatus(status);
     }
+
 
     @Override
     public List<Task> searchByParamStartDate(Date startDate) {
         return taskSpringDataRepository.searchByParamStartDate(startDate);
     }
 
+
     @Override
     public List<Task> searchByParamEndDate(Date endDate) {
         return taskSpringDataRepository.searchByParamEndDate(endDate);
+    }
+
+
+    @Override
+    public List<Task> searchByParamsStartAndEndDates(Date startDate, Date endDate) {
+        return taskSpringDataRepository.searchByParamsStartAndEndDates(startDate, endDate);
     }
 }
 

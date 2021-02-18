@@ -11,9 +11,16 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.sql.Date;
 import java.util.List;
 
@@ -23,29 +30,31 @@ import java.util.List;
 public class TaskController {
 
   private final TaskService taskService;
-
   public final ConversionService conversionService;
 
-  @ApiOperation(value = "Endpoint \"Creation of tasks\"")
+  @ApiOperation(value = "Endpoint \"Creation of task\"")
   @ApiResponses({
     @ApiResponse(code = 201, message = "Successful creation of task"),
     @ApiResponse(code = 500, message = "Server error, something wrong")
   })
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Task createUser(@RequestBody TaskCreateRequest taskCreateRequest) {
+  public Task createTask(@RequestBody TaskCreateRequest taskCreateRequest) {
 
     Task task = conversionService.convert(taskCreateRequest, Task.class);
 
     return taskService.save(task);
   }
 
-  @ApiOperation(value = "Endpoint \"All tasks search\"")
-  @GetMapping
-  public ResponseEntity<List<Task>> findAllTasks() {
 
-    return new ResponseEntity<>(taskService.findAll(), HttpStatus.OK);
+  @ApiOperation(value = "Endpoint \"Task's deletion\"")
+  @PutMapping("/delete/{id}")
+  @ResponseStatus(HttpStatus.OK)
+  public void deleteTaskById(@PathVariable Long id) {
+
+    taskService.deleteById(id);
   }
+
 
   @ApiOperation(value = "Endpoint \"Task's update\"")
   @PutMapping
@@ -57,13 +66,14 @@ public class TaskController {
     return taskService.update(task);
   }
 
-  @ApiOperation(value = "Endpoint \"Task's deletion\"")
-  @PutMapping("/delete/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public void deleteTaskById(@PathVariable Long id) {
 
-    taskService.deleteById(id);
+  @ApiOperation(value = "Endpoint \"Get all tasks\"")
+  @GetMapping
+  public ResponseEntity<List<Task>> findAllTasks() {
+
+    return new ResponseEntity<>(taskService.findAll(), HttpStatus.OK);
   }
+
 
   @ApiOperation(value = "Endpoint \"Tasks search by params with Function Call where:" +
           " result equal status and startDate - more or equal Start Date and endDate - less or equal End Date\"")
@@ -75,12 +85,14 @@ public class TaskController {
         taskService.searchByParamsFunctionCall(status, startDate, endDate), HttpStatus.OK);
   }
 
+
   @ApiOperation(value = "Endpoint \"Tasks search by param \"Name\" by CriteriaApi\"")
   @GetMapping("/criteriaapisearch")
   public ResponseEntity<List<Task>> searchByParamNameCriteriaApi(String name) {
 
     return new ResponseEntity<>(taskService.searchByParamNameCriteriaApi(name), HttpStatus.OK);
   }
+
 
   @ApiOperation(value = "Endpoint \"Tasks search by params by HQL (one param to enter)\"")
   @GetMapping("/hqlsearch")
@@ -97,6 +109,7 @@ public class TaskController {
     return new ResponseEntity<>(taskService.searchByParamStatus(status), HttpStatus.OK);
   }
 
+
   @ApiOperation(value = "Endpoint \"Tasks search by param \"Start Date\"")
   @GetMapping("/searchbystartdate")
   public ResponseEntity<List<Task>> searchByParamStartDate(Date startDate) {
@@ -104,10 +117,18 @@ public class TaskController {
     return new ResponseEntity<>(taskService.searchByParamStartDate(startDate), HttpStatus.OK);
   }
 
+
   @ApiOperation(value = "Endpoint \"Task's search by param \"End Date\"")
   @GetMapping("/searchbyenddate")
   public ResponseEntity<List<Task>> searchByParamEndDate(Date endDate) {
 
     return new ResponseEntity<>(taskService.searchByParamEndDate(endDate), HttpStatus.OK);
+  }
+
+  @ApiOperation(value = "Endpoint \"Task's search by params \"Start Date and End Date\"")
+  @GetMapping("/searchbystartandenddates")
+  public ResponseEntity<List<Task>> searchByParamsStartAndEndDates(@RequestParam Date startDate, @RequestParam Date endDate) {
+
+    return new ResponseEntity<>(taskService.searchByParamsStartAndEndDates(startDate, endDate), HttpStatus.OK);
   }
 }

@@ -31,4 +31,8 @@ public interface TaskSpringDataRepository extends JpaRepository<Task, Long> {
 
     @Query(value = "select t from Task t where t.endDate <= :endDate")
     List<Task> searchByParamEndDate(Date endDate);
+
+
+    @Query(value = "select t from Task t where t.startDate >= :startDate and t.endDate <= :endDate")
+    List<Task> searchByParamsStartAndEndDates(Date startDate, Date endDate);
 }

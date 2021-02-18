@@ -10,9 +10,9 @@ public interface TaskService {
 
   List<Task> findAll();
 
-  Task save(Task user);
+  Task save(Task task);
 
-  Task update(Task user);
+  Task update(Task task);
 
   void deleteById(Long id);
 
@@ -29,4 +29,6 @@ public interface TaskService {
   List<Task> searchByParamStartDate(Date startDate);
 
   List<Task> searchByParamEndDate(Date endDate);
+
+  List<Task> searchByParamsStartAndEndDates(Date startDate, Date endDate);
 }

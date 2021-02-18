@@ -34,13 +34,13 @@ app:
 
 ---
 amazon:
-  images:
+  files:
     s3: epolsofttaskmaximzabavskiy
-    accessKeyId: name
-    secretKey: name
+    accessKeyId: amazonAccessKey
+    secretKey: amazonSecretKey
     bucket: epolsofttaskmaximzabavskiy
     serverUrl: "https://epolsofttaskmaximzabavskiy.s3.eu-central-1.amazonaws.com"
-    userFolder: reports
+    reportFolder: reports
     region: eu-central-1
 
 

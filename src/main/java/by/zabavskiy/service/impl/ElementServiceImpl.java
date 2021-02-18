@@ -1,11 +1,8 @@
 package by.zabavskiy.service.impl;
 
 import by.zabavskiy.domain.Element;
-import by.zabavskiy.domain.Task;
 import by.zabavskiy.repository.ElementRepository;
-import by.zabavskiy.repository.TaskRepository;
 import by.zabavskiy.repository.impl.ElementSpringDataRepository;
-import by.zabavskiy.repository.impl.TaskSpringDataRepository;
 import by.zabavskiy.service.ElementService;
 import org.springframework.stereotype.Service;
 
@@ -48,8 +45,8 @@ public class ElementServiceImpl implements ElementService {
     }
 
     @Override
-    public List<Element> searchByParamTaskId(Long id){
-        return elementSpringDataRepository.searchByParamTaskId(id);
+    public List<Element> searchByParamTaskId(Long taskId){
+        return elementSpringDataRepository.searchByParamTaskId(taskId);
     }
 
 }

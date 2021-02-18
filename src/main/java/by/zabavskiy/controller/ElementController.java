@@ -11,7 +11,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -21,8 +28,8 @@ import java.util.List;
 public class ElementController {
 
     private final ElementService elementService;
-
     public final ConversionService conversionService;
+
 
     @ApiOperation(value = "Endpoint \"Creation of element\"")
     @ApiResponses({
@@ -38,12 +45,14 @@ public class ElementController {
         return elementService.save(element);
     }
 
-    @ApiOperation(value = "Endpoint \"All elements search\"")
+
+    @ApiOperation(value = "Endpoint \"Get all elements\"")
     @GetMapping
-    public ResponseEntity<List<Element>> findAllTasks() {
+    public ResponseEntity<List<Element>> findAllElements() {
 
         return new ResponseEntity<>(elementService.findAll(), HttpStatus.OK);
     }
+
 
     @ApiOperation(value = "Endpoint \"Element's update\"")
     @PutMapping
@@ -55,6 +64,7 @@ public class ElementController {
         return elementService.update(element);
     }
 
+
     @ApiOperation(value = "Endpoint \"Element's deletion\"")
     @PutMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -63,17 +73,19 @@ public class ElementController {
         elementService.deleteElementById(elementId);
     }
 
-    @ApiOperation(value = "Endpoint \"Elements search by param \"Name\" by CriteriaApi\"")
+
+    @ApiOperation(value = "Endpoint \"Elements search by param \"Value\" by CriteriaApi\"")
     @GetMapping("/criteriaapisearch")
-    public ResponseEntity<List<Element>> searchByParamNameCriteriaApi(String value) {
+    public ResponseEntity<List<Element>> searchByParamValueCriteriaApi(String value) {
 
         return new ResponseEntity<>(elementService.searchByParamValueCriteriaApi(value), HttpStatus.OK);
     }
 
+
     @ApiOperation(value = "Endpoint \"Elements search by param \"Task Id\"\"")
     @GetMapping("/elementsearchbytaskid")
-    public ResponseEntity<List<Element>> searchByParamTaskId(Long id) {
+    public ResponseEntity<List<Element>> searchByParamTaskId(Long taskId) {
 
-        return new ResponseEntity<>(elementService.searchByParamTaskId(id), HttpStatus.OK);
+        return new ResponseEntity<>(elementService.searchByParamTaskId(taskId), HttpStatus.OK);
     }
 }

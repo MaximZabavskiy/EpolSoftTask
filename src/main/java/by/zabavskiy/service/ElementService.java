@@ -1,7 +1,6 @@
 package by.zabavskiy.service;
 
 import by.zabavskiy.domain.Element;
-import by.zabavskiy.domain.Task;
 
 import java.util.List;
 
@@ -9,13 +8,13 @@ public interface ElementService {
 
     List<Element> findAll();
 
-    Element save(Element user);
+    Element save(Element element);
 
-    Element update(Element user);
+    Element update(Element element);
 
     void deleteElementById(Long id);
 
     List<Element> searchByParamValueCriteriaApi(String value);
 
-    List<Element> searchByParamTaskId(Long id);
+    List<Element> searchByParamTaskId(Long taskId);
 }
